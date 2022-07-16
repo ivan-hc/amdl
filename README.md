@@ -3,7 +3,7 @@ This is a script to download and search installation scripts for the apps and Ap
 The reason behind the creation of this script is to easily download on your Desktop the installation scripts from the main repository, the way you can check, edit and install them the way you prefer and without having to install "AM" to manage them.
 
 # Setup
-     wget https://raw.githubusercontent.com/ivan-hc/amdl/amdl && chmod a+x ./amdl
+     wget https://raw.githubusercontent.com/ivan-hc/amdl/main/amdl && chmod a+x ./amdl
 
 # Usage
      "amdl [option]"   
