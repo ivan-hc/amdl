@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+URL="https://raw.githubusercontent.com/ivan-hc/AM-application-manager/main"
+arch=$(uname -m)
+
+case "$1" in
+  ''|'-h'|'help') echo '
+ "amdl" is a tool to download installation scripts of applications available for
+ the "AM" Application Manager (https://github.com/IVAN-HC/AM-APPLICATION-MANAGER)
+
+  USAGE: "amdl [option]"   
+  	 "amdl [option] [ARGUMENT]"
+ 	
+  ALL THE OPTIONS:
+    
+  -d, download
+  USAGE: "amdl -d $PROGRAM"
+  DESCRIPTION: Download an installation script from the "AM" repository to your 
+  desktop without installing it. This option can download scripts from both 
+  "programs" (stable scripts on the repository) and "testing" (where scripts are
+  unstable and not complete at all), for your architecture.
+ 
+  -h, help
+  USAGE: "amdl -h"
+  DESCRIPTION: Prints this message. 
+  
+  -q, query
+  USAGE: "amdl -q $KEYWORD"
+  DESCRIPTION: Use one or more keywords to search for in the list of available
+  applications.
+  ' ;;
+  '-d'|'download')
+	while [ -n "$1" ]
+	do
+	rm -f ~/.cache/download-args
+	echo $@ | tr ' ' '\n' >> ~/.cache/download-args && echo STOP >> ~/.cache/download-args
+	ARGS=$(sed '1d' ~/.cache/download-args)
+	for arg in $ARGS; do
+	for var in $arg; do
+	if [ $arg == STOP ]; then
+	exit
+	else
+	case $arg in
+	*) if curl --output /dev/null --silent --head --fail $URL/programs/$arch/$arg  1>/dev/null; then
+		echo ""; echo ' "'$arg'" installation script downloaded! ' | tr a-z A-Z
+		cd $(xdg-user-dir DESKTOP); wget -q $URL/programs/$arch/$arg -O ./$arg.sh; echo ""; break;
+	elif curl --output /dev/null --silent --head --fail $URL/testing/$arch/$arg  1>/dev/null; then
+		echo ""; echo '  "'$arg'" downloaded from "testing", the unstable branch ' | tr a-z A-Z; echo ""; echo ' WARNING! PROGRAMS COMING FROM "TESTING" ARE BROKEN, USE AT YOUR OWN RISK!'
+		cd $(xdg-user-dir DESKTOP); wget -q $URL/testing/$arch/$arg -O ./$arg.sh; echo ""; break;
+	else
+		echo ""; echo ' "'$arg'" is NOT a valid argument!'; echo ""; break;
+	fi
+	esac
+	fi
+	done
+	done
+	done
+	shift;;
+  '-q'|'query') rm -R -f ~/.cache/$arch-apps ~/.cache/list && wget -q $URL/programs/$arch-apps -P ~/.cache && echo -e "$(cat ~/.cache/$arch-apps | awk -v FS="(◆ | : )" '{print $2}')" >> ~/.cache/list
+	ARGS=$(echo "$@" | sed 's/-q //')
+	echo ""
+	echo ' Search results for "'$ARGS'" in the list of available programs:' | tr a-z A-Z
+	echo ""
+	grep -i -E "$2" ~/.cache/$arch-apps | grep -i -E "$3" | grep -i -E "$4" | grep -i -E "$5" | grep -i -E "$6" | grep -i -E "$7" | grep -i -E "$8" | grep -i -E "$9"
+	echo ""
+	exit;;
+esac
