@@ -23,5 +23,7 @@ The reason behind the creation of this script is to easily download on your Desk
   `-q`, `query`
   USAGE: "`amdl -q $KEYWORD`"
   DESCRIPTION: Use one or more keywords to search for in the list of available applications.
-  
+
+-------------------------------------------------------
 # This script is part of ["AM" Application Manager](https://github.com/ivan-hc/AM-application-manager).
+-------------------------------------------------------
