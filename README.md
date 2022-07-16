@@ -17,9 +17,9 @@ if you prefer, you can push it into a `$PATH`, in this way you have not to add `
 ### Options
     
   `-d`, `download`
-  USAGE: "]amdl -d $PROGRAM`"
-  DESCRIPTION: Download an installation script from the "AM" repository to your desktop without installing it. This option can download scripts from both "programs" (stable scripts on the repository) and "testing" (where scripts are
-  unstable and not complete at all), for your architecture.
+  USAGE: "`amdl -d $PROGRAM`"
+  DESCRIPTION: Download an installation script from the "AM" repository to your desktop without installing it. This option can download scripts from both "programs" ([stable scripts on the repository](https://github.com/ivan-hc/AM-Application-Manager/tree/main/programs)) and "testing" ([where scripts are
+  unstable and not complete at all](https://github.com/ivan-hc/AM-Application-Manager/tree/main/testing)), for your architecture.
  
   `-h`, `help`
   USAGE: "`amdl -h`"
